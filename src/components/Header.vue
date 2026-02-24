@@ -6,8 +6,8 @@
       </div>
       <nav class="navbar">
         <ul>
-          <li><a href="#" class="active">Inicio</a></li>
-          <li><a href="#">Apartado 2</a></li>
+          <li><router-link to="/">Simulador</router-link></li>
+          <li><router-link to="/teoria">Teoría de Diabetes</router-link></li>
           <li><a href="#">Apartado 3</a></li>
           <li><a href="#">Apartado 4</a></li>
         </ul>
@@ -54,17 +54,19 @@
   padding: 0;
 }
 
+/* Estilos para los enlaces y para el enlace activo (router-link-active) */
 .navbar a {
   text-decoration: none;
   color: #5c6a79;
   font-weight: 500;
   font-size: 1rem;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
   padding: 10px 0;
+  border-bottom: 2px solid transparent;
 }
 
-.navbar a:hover, .navbar a.active {
+.navbar a:hover, .navbar .router-link-exact-active {
   color: #009688;
   border-bottom: 2px solid #009688;
 }
-</style>s
+</style>
