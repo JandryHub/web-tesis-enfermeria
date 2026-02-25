@@ -6,9 +6,9 @@
       </div>
       <nav class="navbar">
         <ul>
-          <li><router-link to="/">Simulador</router-link></li>
           <li><router-link to="/teoria">Teoría de Diabetes</router-link></li>
-          <li><a href="#">Apartado 3</a></li>
+          <li><router-link to="/">Simulador</router-link></li>
+          <li><router-link to="/trivia">Evaluación Clínica</router-link></li>
           <li><a href="#">Apartado 4</a></li>
         </ul>
       </nav>

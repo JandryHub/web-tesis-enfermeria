@@ -1,8 +1,5 @@
 <template>
   <div class="juego-wrapper">
-    <h2>Minijuego: Pesca de Términos</h2>
-    <p>Atrapa la palabra correcta con tu anzuelo.</p>
-    
     <div id="game-container"></div>
   </div>
 </template>
