@@ -136,7 +136,7 @@
         </ul>
       </section>
 
-      <!-- SECCIÓN 7: REFERENCIAS OFICIALES AMPLIADAS -->
+<!-- SECCIÓN 7: REFERENCIAS OFICIALES AMPLIADAS -->
       <section id="bibliografia" class="wiki-section ref-section">
         <h2>7. Referencias y Bibliografía Oficial</h2>
         <p>
@@ -168,10 +168,23 @@
             <p class="descripcion">Datos epidemiológicos y proyecciones del impacto de la diabetes a nivel mundial.</p>
           </a>
           
-          <a href="https://www.who.int/es/publications/i/item/9789241565257" target="_blank" class="link-card">
-            <h4>Informe Mundial sobre la Diabetes</h4>
+          <!-- AQUÍ ESTÁN LOS 3 ENLACES NUEVOS Y SEGUROS -->
+          <a href="https://www.who.int/es/news-room/fact-sheets/detail/diabetes" target="_blank" class="link-card">
+            <h4>Datos y Cifras sobre la Diabetes</h4>
             <p class="autor">Organización Mundial de la Salud (OMS)</p>
-            <p class="descripcion">Protocolos de prevención primaria y políticas de salud pública globales.</p>
+            <p class="descripcion">Página oficial y permanentemente actualizada de la OMS con prevalencia, impacto y respuestas a nivel mundial.</p>
+          </a>
+
+          <a href="https://www.paho.org/es/temas/diabetes" target="_blank" class="link-card">
+            <h4>Diabetes en las Américas</h4>
+            <p class="autor">Organización Panamericana de la Salud (OPS)</p>
+            <p class="descripcion">Datos epidemiológicos, guías y recursos enfocados específicamente en la región de América Latina y el Caribe.</p>
+          </a>
+
+          <a href="https://www.niddk.nih.gov/health-information/informacion-de-la-salud/diabetes/informacion-general/que-es" target="_blank" class="link-card">
+            <h4>Información General y Fisiopatología</h4>
+            <p class="autor">National Institutes of Health (NIH)</p>
+            <p class="descripcion">Recursos clínicos detallados y de altísima confiabilidad sobre causas, síntomas y tratamientos aprobados.</p>
           </a>
         </div>
       </section>
