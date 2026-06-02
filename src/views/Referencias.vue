@@ -29,6 +29,10 @@
         <p>
           La <b>Diabetes Mellitus (DM)</b> es un síndrome metabólico sistémico que se caracteriza por hiperglucemia crónica, secundaria a un defecto en la secreción de la insulina, a una resistencia a su acción periférica, o a ambas. 
         </p>
+        <figure class="img-container">
+          <img src="https://images.unsplash.com/photo-1505581373504-2eb962f3bdbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Contexto clínico de la diabetes" class="wiki-image">
+          <figcaption class="img-caption">El control y monitoreo constante es vital en el manejo de la Diabetes Mellitus.</figcaption>
+        </figure>
         <p>
           En el contexto mundial, la <i>Diabetes Mellitus Tipo 2 (DM2)</i> representa más del 90% de los casos. Históricamente considerada una enfermedad de adultos mayores, su incidencia ha aumentado drásticamente en poblaciones jóvenes y pediátricas debido a la epidemia global de obesidad visceral y sedentarismo.
         </p>
@@ -53,6 +57,12 @@
         <p>
           Según la Asociación Americana de Diabetes (ADA) y la Organización Mundial de la Salud (OMS), el diagnóstico formal se establece mediante las siguientes pruebas de laboratorio. Si no hay síntomas clásicos (poliuria, polidipsia, polifagia, pérdida de peso), se requieren dos resultados anormales en la misma muestra o en dos muestras separadas para confirmar:
         </p>
+        
+        <figure class="img-container">
+          <img src="https://images.unsplash.com/photo-1584308666744-24d59ce05500?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Pruebas de laboratorio y glucómetro" class="wiki-image">
+          <figcaption class="img-caption">Extracción de muestras y pruebas de glucemia para confirmar el diagnóstico clínico.</figcaption>
+        </figure>
+
         <div class="tabla-academica">
           <table>
             <thead>
@@ -66,19 +76,19 @@
             <tbody>
               <tr>
                 <td>Glucosa plasmática en ayunas (FPG)</td>
-                <td>< 100 mg/dL</td>
+                <td>&lt; 100 mg/dL</td>
                 <td>100 mg/dL - 125 mg/dL</td>
                 <td>≥ 126 mg/dL</td>
               </tr>
               <tr>
                 <td>Prueba de Tolerancia Oral (PTOG - 2 hrs)</td>
-                <td>< 140 mg/dL</td>
+                <td>&lt; 140 mg/dL</td>
                 <td>140 mg/dL - 199 mg/dL</td>
                 <td>≥ 200 mg/dL</td>
               </tr>
               <tr>
                 <td>Hemoglobina Glicosilada (HbA1c)</td>
-                <td>< 5.7%</td>
+                <td>&lt; 5.7%</td>
                 <td>5.7% - 6.4%</td>
                 <td>≥ 6.5%</td>
               </tr>
@@ -87,7 +97,7 @@
         </div>
       </section>
 
-      <!-- SECCIÓN 4 NUEVA: FARMACOLOGÍA -->
+      <!-- SECCIÓN 4 -->
       <section id="farmacologia" class="wiki-section">
         <h2>4. Manejo Farmacológico Contemporáneo</h2>
         <p>
@@ -99,9 +109,13 @@
           <li><b>Agonistas del receptor GLP-1 (Semaglutida, Liraglutida):</b> Fármacos inyectables u orales que simulan la hormona incretina. Aumentan la secreción de insulina dependiente de glucosa, retrasan el vaciamiento gástrico y promueven una pérdida de peso significativa.</li>
           <li><b>Insulinoterapia:</b> Indicada desde el inicio si hay pérdida de peso drástica, síntomas graves o HbA1c > 10%. Se utilizan regímenes basal-bolo combinando insulinas de acción prolongada y de acción ultra rápida.</li>
         </ul>
+        <figure class="img-container">
+          <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Farmacología y medicamentos" class="wiki-image">
+          <figcaption class="img-caption">El manejo farmacológico actual prioriza la protección cardiovascular y renal del paciente.</figcaption>
+        </figure>
       </section>
 
-      <!-- SECCIÓN 5 NUEVA: COMPLICACIONES -->
+      <!-- SECCIÓN 5 -->
       <section id="complicaciones" class="wiki-section">
         <h2>5. Complicaciones Clínicas</h2>
         <p>
@@ -111,7 +125,7 @@
         <ul>
           <li><b>Cetoacidosis Diabética (CAD):</b> Más común en la DM1. Ante la falta absoluta de insulina, el cuerpo degrada grasas masivamente, produciendo cuerpos cetónicos que acidifican la sangre a niveles letales.</li>
           <li><b>Estado Hiperosmolar Hiperglucémico (EHH):</b> Típico de la DM2 en adultos mayores. Niveles de glucosa extremos (>600 mg/dL) que causan deshidratación celular severa y alteraciones neurológicas, sin acidosis significativa.</li>
-          <li><b>Hipoglucemia:</b> (< 70 mg/dL). Generalmente iatrogénica (causada por exceso de medicación, saltarse comidas o ejercicio intenso sin ajuste de dosis).</li>
+          <li><b>Hipoglucemia:</b> (&lt; 70 mg/dL). Generalmente iatrogénica (causada por exceso de medicación, saltarse comidas o ejercicio intenso sin ajuste de dosis).</li>
         </ul>
         <p><b>Complicaciones Crónicas (Micro y Macrovasculares):</b></p>
         <ul>
@@ -128,6 +142,10 @@
         <p>
           El personal de enfermería es el pilar central en la educación y monitoreo del paciente diabético. Las intervenciones (NIC) y diagnósticos (NANDA) se centran en el empoderamiento del paciente para el autocuidado:
         </p>
+        <figure class="img-container">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Atención de enfermería al paciente" class="wiki-image">
+          <figcaption class="img-caption">El profesional de enfermería es indispensable en la educación diabetológica y el seguimiento clínico.</figcaption>
+        </figure>
         <ul>
           <li><b>Educación Diabetológica Continua:</b> Instruir sobre la técnica correcta de auto-monitoreo glucémico capilar y la calibración de dispositivos.</li>
           <li><b>Administración Segura:</b> Enseñar la correcta rotación de sitios de inyección de insulina (abdomen, muslos, glúteos, brazos) para evitar hipertrofia o lipodistrofia del tejido subcutáneo.</li>
@@ -136,7 +154,7 @@
         </ul>
       </section>
 
-<!-- SECCIÓN 7: REFERENCIAS OFICIALES AMPLIADAS -->
+      <!-- SECCIÓN 7: REFERENCIAS OFICIALES AMPLIADAS -->
       <section id="bibliografia" class="wiki-section ref-section">
         <h2>7. Referencias y Bibliografía Oficial</h2>
         <p>
@@ -168,7 +186,6 @@
             <p class="descripcion">Datos epidemiológicos y proyecciones del impacto de la diabetes a nivel mundial.</p>
           </a>
           
-          <!-- AQUÍ ESTÁN LOS 3 ENLACES NUEVOS Y SEGUROS -->
           <a href="https://www.who.int/es/news-room/fact-sheets/detail/diabetes" target="_blank" class="link-card">
             <h4>Datos y Cifras sobre la Diabetes</h4>
             <p class="autor">Organización Mundial de la Salud (OMS)</p>
@@ -309,10 +326,34 @@ html {
   color: #1a202c;
 }
 
+/* --- IMÁGENES DENTRO DEL TEXTO --- */
+.img-container {
+  margin: 30px 0;
+  text-align: center;
+}
+
+.wiki-image {
+  max-width: 100%;
+  height: auto;
+  max-height: 380px; /* Limita la altura para que no ocupe toda la pantalla */
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.img-caption {
+  font-size: 0.9rem;
+  color: #718096;
+  margin-top: 12px;
+  font-style: italic;
+}
+
 /* Tabla Médica */
 .tabla-academica {
   overflow-x: auto;
-  margin-top: 20px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 .tabla-academica table {
