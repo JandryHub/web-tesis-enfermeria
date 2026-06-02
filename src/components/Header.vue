@@ -10,7 +10,6 @@
           <li><router-link to="/teoria">Teoría de Diabetes</router-link></li>
           <li><router-link to="/">Simulador</router-link></li>
           <li><router-link to="/trivia">Evaluación Clínica</router-link></li>
-          <li><router-link to="/referencias">Referencias Médicas</router-link></li>
         </ul>
       </nav>
     </div>
