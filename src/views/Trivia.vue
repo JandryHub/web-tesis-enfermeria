@@ -5,12 +5,12 @@
       <p>Responde rápido para mantener tu racha. ¡El tiempo corre!</p>
     </div>
 
-    <div class="trivia-container">
+    <div class="trivia-container" v-if="preguntasSeleccionadas.length > 0">
       <div v-if="!juegoTerminado" class="trivia-card" :class="{'shake-anim': animacionError}">
         
         <div class="trivia-hud">
           <div class="stats-left">
-            <span class="badge-pregunta">Pregunta {{ preguntaActual + 1 }} / {{ preguntas.length }}</span>
+            <span class="badge-pregunta">Pregunta {{ preguntaActual + 1 }} / {{ preguntasSeleccionadas.length }}</span>
             <span v-if="racha > 1" class="badge-racha">🔥 Racha x{{ racha }}</span>
           </div>
           <div class="stats-right">
@@ -27,16 +27,16 @@
         </div>
         <p class="timer-text">{{ tiempoRestante }}s</p>
 
-        <h3 class="pregunta-texto">{{ preguntas[preguntaActual].pregunta }}</h3>
+        <h3 class="pregunta-texto">{{ preguntasSeleccionadas[preguntaActual].pregunta }}</h3>
 
         <div class="opciones-grid">
           <button 
-            v-for="(opcion, index) in preguntas[preguntaActual].opciones" 
+            v-for="(opcion, index) in preguntasSeleccionadas[preguntaActual].opciones" 
             :key="index"
             class="btn-opcion"
             :class="{
-              'correcta': mostrarExplicacion && index === preguntas[preguntaActual].respuestaCorrecta,
-              'incorrecta': mostrarExplicacion && index === respuestaSeleccionada && index !== preguntas[preguntaActual].respuestaCorrecta,
+              'correcta': mostrarExplicacion && index === preguntasSeleccionadas[preguntaActual].respuestaCorrecta,
+              'incorrecta': mostrarExplicacion && index === respuestaSeleccionada && index !== preguntasSeleccionadas[preguntaActual].respuestaCorrecta,
               'deshabilitado': mostrarExplicacion
             }"
             :disabled="mostrarExplicacion"
@@ -49,17 +49,17 @@
 
         <div v-if="mostrarExplicacion" class="explicacion-box" :class="esCorrecta ? 'box-success' : 'box-error'">
           <h4>{{ esCorrecta ? '¡Diagnóstico Correcto! 🩺' : (seAcaboElTiempo ? '¡Tiempo Agotado! ⏰' : 'Diagnóstico Incorrecto ❌') }}</h4>
-          <p v-html="preguntas[preguntaActual].explicacion"></p>
+          <p v-html="preguntasSeleccionadas[preguntaActual].explicacion"></p>
           <button class="btn-siguiente" @click="siguientePregunta">
-            {{ preguntaActual === preguntas.length - 1 ? 'Ver Resultados Finales' : 'Siguiente Paciente ➜' }}
+            {{ preguntaActual === preguntasSeleccionadas.length - 1 ? 'Ver Resultados Finales' : 'Siguiente Paciente ➜' }}
           </button>
         </div>
 
       </div>
 
       <div v-else class="resultados-card">
-        <div class="resultado-icon">{{ puntaje >= 80 ? '🏅' : (puntaje >= 50 ? '👍' : '📚') }}</div>
-        <h3 class="titulo-resultado">{{ puntaje >= 80 ? '¡Sobresaliente!' : (puntaje >= 50 ? 'Buen Trabajo' : 'Necesitas Repasar') }}</h3>
+        <div class="resultado-icon">{{ (puntaje / puntosMaximosPosibles) >= 0.8 ? '🏅' : ((puntaje / puntosMaximosPosibles) >= 0.5 ? '👍' : '📚') }}</div>
+        <h3 class="titulo-resultado">{{ (puntaje / puntosMaximosPosibles) >= 0.8 ? '¡Sobresaliente!' : ((puntaje / puntosMaximosPosibles) >= 0.5 ? 'Buen Trabajo' : 'Necesitas Repasar') }}</h3>
         
         <div class="score-circle">
           <span>{{ puntaje }}</span>
@@ -67,19 +67,20 @@
         </div>
         
         <p class="mensaje-final">
-          Acertaste <b>{{ respuestasCorrectasTotales }}</b> de {{ preguntas.length }} preguntas.
+          Acertaste <b>{{ respuestasCorrectasTotales }}</b> de {{ preguntasSeleccionadas.length }} preguntas.
         </p>
 
-        <button class="btn-reiniciar" @click="reiniciarTrivia">↻ Iniciar Nueva Evaluación</button>
+        <button class="btn-reiniciar" @click="reiniciarTrivia">↻ Iniciar Nueva Evaluación Aleatoria</button>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 // ESTADO DEL JUEGO
+const preguntasSeleccionadas = ref([]);
 const preguntaActual = ref(0);
 const puntaje = ref(0);
 const racha = ref(0);
@@ -89,6 +90,9 @@ const respuestaSeleccionada = ref(null);
 const mostrarExplicacion = ref(false);
 const esCorrecta = ref(false);
 const animacionError = ref(false);
+
+// Calculo aproximado de puntos maximos (Base 10 + racha 5 + tiempo 5) = 20 por pregunta
+const puntosMaximosPosibles = computed(() => preguntasSeleccionadas.value.length * 20);
 
 // TEMPORIZADOR
 const tiempoMaximo = 15;
@@ -100,69 +104,166 @@ const porcentajeTiempo = computed(() => {
   return (tiempoRestante.value / tiempoMaximo) * 100;
 });
 
-// BASE DE DATOS DE PREGUNTAS (10 Preguntas basadas en la teoría completa)
-const preguntas = ref([
+// BASE DE DATOS DE PREGUNTAS (Banco Maestro de 18 preguntas)
+const bancoCompleto = [
   {
     pregunta: "¿Qué hormona actúa como 'llave' para que la glucosa entre a las células?",
     opciones: ["Glucagón", "Insulina", "Adrenalina", "Cortisol"],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 1, // Insulina
     explicacion: "El páncreas produce <b>Insulina</b>, encargada de permitir la captación de glucosa por los tejidos."
   },
   {
     pregunta: "¿Cuál es la característica fisiológica principal de la Diabetes Tipo 2?",
-    opciones: ["Destrucción autoinmune del páncreas", "Alergia severa a los carbohidratos", "Resistencia a la insulina en los tejidos", "Falta de glóbulos rojos en sangre"],
-    respuestaCorrecta: 2,
+    opciones: ["Destrucción autoinmune del páncreas", "Alergia a los carbohidratos", "Resistencia a la insulina en los tejidos", "Falta de glóbulos rojos"],
+    respuestaCorrecta: 2, // Resistencia a la insulina...
     explicacion: "En la <b>Diabetes Tipo 2</b>, el cuerpo crea una resistencia a la insulina, seguida de un declive en las células beta."
   },
   {
-    pregunta: "¿Qué signo visible en la piel (oscurecimiento en cuello/axilas) puede alertar sobre Resistencia a la Insulina?",
+    pregunta: "¿Qué signo visible en la piel puede alertar sobre Resistencia a la Insulina?",
     opciones: ["Vitíligo", "Acanthosis nigricans", "Psoriasis", "Dermatitis atópica"],
-    respuestaCorrecta: 1,
-    explicacion: "La <b>Acanthosis nigricans</b> es una manifestación cutánea muy común en pacientes con hiperinsulinemia y síndrome metabólico."
+    respuestaCorrecta: 1, // Acanthosis nigricans
+    explicacion: "La <b>Acanthosis nigricans</b> (oscurecimiento en pliegues) es una manifestación cutánea de hiperinsulinemia."
   },
   {
     pregunta: "¿Qué ocurre con la glucosa cuando los músculos y el hígado ignoran a la insulina?",
-    opciones: ["Se evapora por la respiración", "Se convierte directamente en masa muscular", "Se acumula peligrosamente en el torrente sanguíneo", "El estómago la rechaza"],
-    respuestaCorrecta: 2,
-    explicacion: "Al no poder entrar a las células, la glucosa se queda atrapada en la <b>Sangre</b>, causando hiperglucemia y daño endotelial."
+    opciones: ["Se evapora por la respiración", "Se convierte en músculo", "Se acumula peligrosamente en la sangre", "El estómago la rechaza"],
+    respuestaCorrecta: 2, // Se acumula...
+    explicacion: "Al no poder entrar a las células, la glucosa se queda atrapada en la <b>Sangre</b>, causando hiperglucemia."
   },
   {
-    pregunta: "¿Qué examen es considerado el 'estándar de oro' para evaluar el promedio de glucosa de los últimos 3 meses?",
-    opciones: ["Prueba de esfuerzo", "Hemoglobina Glicosilada (HbA1c)", "Glucómetro capilar en ayunas", "Biometría hemática"],
-    respuestaCorrecta: 1,
-    explicacion: "La <b>Hemoglobina Glicosilada (HbA1c)</b> refleja el control a largo plazo y es vital para monitorear el tratamiento."
+    pregunta: "¿Qué examen es el 'estándar de oro' para evaluar el promedio de glucosa de los últimos 3 meses?",
+    opciones: ["Prueba de esfuerzo", "Hemoglobina Glicosilada (HbA1c)", "Glucómetro en ayunas", "Biometría hemática"],
+    respuestaCorrecta: 1, // HbA1c
+    explicacion: "La <b>Hemoglobina Glicosilada (HbA1c)</b> refleja el control a largo plazo."
   },
   {
     pregunta: "¿Por qué el ejercicio de fuerza es un tratamiento vital para el paciente insulinorresistente?",
-    opciones: ["Porque la contracción muscular capta glucosa de la sangre independientemente de la insulina", "Porque hace que el paciente respire más rápido", "Porque elimina el azúcar a través del sudor", "Porque reemplaza la necesidad de beber agua"],
-    respuestaCorrecta: 0,
-    explicacion: "El músculo activo usa transportadores (GLUT4) que <b>absorben glucosa sin necesitar insulina</b>, reduciendo los niveles en sangre."
+    opciones: ["La contracción muscular capta glucosa sin necesidad de insulina", "Hace que respire más rápido", "Elimina el azúcar por el sudor", "Reemplaza el agua"],
+    respuestaCorrecta: 0, // La contracción...
+    explicacion: "El músculo activo usa transportadores (GLUT4) que <b>absorben glucosa sin necesitar insulina</b>."
   },
   {
-    pregunta: "¿Qué tipo de alimentos se priorizan en el manejo nutricional de esta condición?",
-    opciones: ["Alimentos fritos", "Carbohidratos refinados", "Alimentos de bajo Índice Glucémico (IG) y alta fibra", "Exclusivamente proteínas en polvo"],
-    respuestaCorrecta: 2,
-    explicacion: "Los alimentos de <b>bajo Índice Glucémico</b> elevan la glucosa de forma lenta y sostenida, evitando picos de insulina."
+    pregunta: "¿Qué tipo de alimentos se priorizan en el manejo nutricional de la diabetes?",
+    opciones: ["Alimentos fritos", "Carbohidratos refinados", "Alimentos de bajo Índice Glucémico y alta fibra", "Solo proteínas"],
+    respuestaCorrecta: 2, // Bajo IG...
+    explicacion: "Los alimentos de <b>bajo Índice Glucémico</b> elevan la glucosa de forma lenta y sostenida."
   },
   {
     pregunta: "¿Qué fármaco (biguanida) es considerado de primera línea para mejorar la sensibilidad a la insulina?",
     opciones: ["Ibuprofeno", "Metformina", "Omeprazol", "Penicilina"],
-    respuestaCorrecta: 1,
-    explicacion: "La <b>Metformina</b> reduce la producción hepática de glucosa (gluconeogénesis) y hace a los tejidos más sensibles."
+    respuestaCorrecta: 1, // Metformina
+    explicacion: "La <b>Metformina</b> reduce la producción hepática de glucosa y sensibiliza los tejidos."
   },
   {
     pregunta: "¿Qué tipo de diabetes aparece por primera vez y se diagnostica durante el embarazo?",
-    opciones: ["Diabetes Mellitus Tipo 1", "Diabetes Insípida", "Diabetes Mellitus Tipo 2", "Diabetes Gestacional"],
-    respuestaCorrecta: 3,
-    explicacion: "La <b>Diabetes Gestacional</b> es una intolerancia a los carbohidratos que surge típicamente en el segundo o tercer trimestre."
+    opciones: ["Diabetes Tipo 1", "Diabetes Insípida", "Diabetes Tipo 2", "Diabetes Gestacional"],
+    respuestaCorrecta: 3, // Gestacional
+    explicacion: "La <b>Diabetes Gestacional</b> es una intolerancia a los carbohidratos que surge en el segundo o tercer trimestre."
   },
   {
     pregunta: "¿Qué componente del páncreas es el encargado directo de secretar la insulina?",
     opciones: ["Las células alfa", "Las células beta de los islotes de Langerhans", "Los conductos biliares", "El tejido adiposo"],
-    respuestaCorrecta: 1,
-    explicacion: 'Las <b>células beta</b> pancreáticas son las "fábricas" de insulina en el cuerpo humano.'
+    respuestaCorrecta: 1, // Células beta
+    explicacion: 'Las <b>células beta</b> pancreáticas son las "fábricas" de insulina.'
+  },
+  {
+    pregunta: "Según la ADA, ¿qué valor de Hemoglobina Glicosilada confirma el diagnóstico de Diabetes?",
+    opciones: ["≥ 6.5%", "5.7% - 6.4%", "≥ 5.5%", "> 7.0%"],
+    respuestaCorrecta: 0, // ≥ 6.5%
+    explicacion: "Un valor de HbA1c de <b>6.5% o superior</b> en dos pruebas separadas confirma la DM."
+  },
+  {
+    pregunta: "En educación diabetológica, ¿cuál es la intervención para tratar una hipoglucemia leve?",
+    opciones: ["Administrar 50 UI de insulina", "Regla del 15/15", "Canalizar vía con NaCl", "Esperar 30 minutos"],
+    respuestaCorrecta: 1, // Regla 15/15
+    explicacion: "La <b>Regla del 15/15</b> consiste en dar 15g de carbohidratos rápidos y esperar 15 minutos."
+  },
+  {
+    pregunta: "Familia farmacológica que bloquea la reabsorción de glucosa en los riñones (induce glucosuria):",
+    opciones: ["Inhibidores de SGLT2", "Agonistas de GLP-1", "Sulfonilureas", "Inhibidores de DPP-4"],
+    respuestaCorrecta: 0, // SGLT2
+    explicacion: "Los <b>Inhibidores de SGLT2</b> (como Dapagliflozina) promueven la excreción de glucosa por la orina."
+  },
+  {
+    pregunta: "¿Qué complicación aguda ocurre ante la falta absoluta de insulina, produciendo cuerpos cetónicos letales?",
+    opciones: ["Cetoacidosis Diabética (CAD)", "Estado Hiperosmolar", "Hipoglucemia", "Neuropatía"],
+    respuestaCorrecta: 0, // CAD
+    explicacion: "La <b>Cetoacidosis Diabética (CAD)</b> acidifica la sangre y es una urgencia médica grave."
+  },
+  {
+    pregunta: "¿Cuáles son los sitios correctos que enfermería debe educar para inyectar insulina?",
+    opciones: ["Solo alrededor del ombligo", "Abdomen, muslos, glúteos y brazos", "Deltoides intramuscular", "Vena cefálica"],
+    respuestaCorrecta: 1, // Abdomen...
+    explicacion: "Rotar en estas áreas de tejido subcutáneo previene la <b>lipodistrofia</b>."
+  },
+  {
+    pregunta: "¿Qué complicación microvascular causa pérdida de sensibilidad táctil, siendo el origen del Pie Diabético?",
+    opciones: ["Nefropatía Diabética", "Neuropatía Periférica", "Retinopatía", "Cardiopatía"],
+    respuestaCorrecta: 1, // Neuropatía...
+    explicacion: "La <b>Neuropatía Periférica</b> destruye los nervios, disminuyendo la sensibilidad al dolor en los pies."
+  },
+  {
+    pregunta: "¿Qué transportador de glucosa falla en su translocación hacia la membrana celular a nivel muscular?",
+    opciones: ["GLUT1", "SGLT2", "GLUT4", "GLUT2"],
+    respuestaCorrecta: 2, // GLUT4
+    explicacion: "La interrupción de la señalización celular impide que el <b>GLUT4</b> llegue a la membrana para absorber energía."
+  },
+  {
+    pregunta: "Según la ADA, ¿qué nivel de Glucosa plasmática en ayunas se considera Prediabetes?",
+    opciones: ["< 100 mg/dL", "100 mg/dL - 125 mg/dL", "126 mg/dL - 140 mg/dL", "> 200 mg/dL"],
+    respuestaCorrecta: 1, // 100 - 125
+    explicacion: "Valores entre <b>100 y 125 mg/dL</b> en ayunas son la principal señal de alerta temprana."
   }
-]);
+];
+
+// FUNCIONES DE ALEATORIEDAD (Fisher-Yates)
+const mezclarArreglo = (arr) => {
+  const nuevoArr = [...arr];
+  for (let i = nuevoArr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [nuevoArr[i], nuevoArr[j]] = [nuevoArr[j], nuevoArr[i]];
+  }
+  return nuevoArr;
+};
+
+const prepararJuego = () => {
+  detenerTemporizador();
+  
+  // 1. Elegimos 10 preguntas al azar del banco
+  const bancoMezclado = mezclarArreglo(bancoCompleto);
+  const seleccion = bancoMezclado.slice(0, 10);
+
+  // 2. Mezclamos las opciones de cada pregunta elegida para que la respuesta no siempre sea la misma letra
+  preguntasSeleccionadas.value = seleccion.map(q => {
+    // Guardamos cuál es el texto de la respuesta correcta original
+    const textoCorrecto = q.opciones[q.respuestaCorrecta];
+    
+    // Mezclamos las opciones
+    const opcionesMezcladas = mezclarArreglo(q.opciones);
+    
+    // Buscamos en qué nuevo índice (0, 1, 2 o 3) quedó la respuesta correcta
+    const nuevoIndiceCorrecto = opcionesMezcladas.indexOf(textoCorrecto);
+
+    return {
+      ...q,
+      opciones: opcionesMezcladas,
+      respuestaCorrecta: nuevoIndiceCorrecto
+    };
+  });
+
+  // 3. Reiniciamos contadores
+  preguntaActual.value = 0;
+  puntaje.value = 0;
+  racha.value = 0;
+  respuestasCorrectasTotales.value = 0;
+  juegoTerminado.value = false;
+  respuestaSeleccionada.value = null;
+  mostrarExplicacion.value = false;
+  animacionError.value = false;
+
+  iniciarTemporizador();
+};
+
 
 // FUNCIONES DEL TEMPORIZADOR
 const iniciarTemporizador = () => {
@@ -179,25 +280,24 @@ const iniciarTemporizador = () => {
 };
 
 const detenerTemporizador = () => {
-  clearInterval(intervaloTiempo);
+  if(intervaloTiempo) clearInterval(intervaloTiempo);
 };
 
 // LÓGICA DEL JUEGO
 const verificarRespuesta = (index) => {
-  if (mostrarExplicacion.value) return; // Evitar doble clic
+  if (mostrarExplicacion.value) return; 
   detenerTemporizador();
   respuestaSeleccionada.value = index;
   
-  if (index === preguntas.value[preguntaActual.value].respuestaCorrecta) {
+  if (index === preguntasSeleccionadas.value[preguntaActual.value].respuestaCorrecta) {
     esCorrecta.value = true;
     mostrarExplicacion.value = true;
     racha.value++;
     respuestasCorrectasTotales.value++;
     
-    // Calcular puntos: Base (10) + Bono por Racha + Bono por Tiempo
     let puntosGanados = 10;
-    if (racha.value > 2) puntosGanados += 5; // Bono racha
-    if (tiempoRestante.value >= 10) puntosGanados += 5; // Bono velocidad
+    if (racha.value > 2) puntosGanados += 5; 
+    if (tiempoRestante.value >= 10) puntosGanados += 5; 
     
     puntaje.value += puntosGanados;
   } else {
@@ -209,15 +309,14 @@ const procesarRespuestaIncorrecta = (index) => {
   respuestaSeleccionada.value = index;
   esCorrecta.value = false;
   mostrarExplicacion.value = true;
-  racha.value = 0; // Se pierde la racha
+  racha.value = 0; 
   
-  // Efecto visual de error
   animacionError.value = true;
   setTimeout(() => animacionError.value = false, 500);
 };
 
 const siguientePregunta = () => {
-  if (preguntaActual.value < preguntas.value.length - 1) {
+  if (preguntaActual.value < preguntasSeleccionadas.value.length - 1) {
     preguntaActual.value++;
     respuestaSeleccionada.value = null;
     mostrarExplicacion.value = false;
@@ -229,18 +328,13 @@ const siguientePregunta = () => {
 };
 
 const reiniciarTrivia = () => {
-  preguntaActual.value = 0;
-  puntaje.value = 0;
-  racha.value = 0;
-  respuestasCorrectasTotales.value = 0;
-  juegoTerminado.value = false;
-  respuestaSeleccionada.value = null;
-  mostrarExplicacion.value = false;
-  iniciarTemporizador();
+  prepararJuego(); // Vuelve a barajar todo y reinicia
 };
 
 // Iniciar el reloj al montar el componente
-iniciarTemporizador();
+onMounted(() => {
+  prepararJuego();
+});
 
 // Limpiar el intervalo si el usuario cambia de página
 onUnmounted(() => {
