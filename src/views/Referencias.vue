@@ -30,7 +30,7 @@
           La <b>Diabetes Mellitus (DM)</b> es un síndrome metabólico sistémico que se caracteriza por hiperglucemia crónica, secundaria a un defecto en la secreción de la insulina, a una resistencia a su acción periférica, o a ambas. 
         </p>
         <figure class="img-container">
-          <img src="https://images.unsplash.com/photo-1505581373504-2eb962f3bdbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Contexto clínico de la diabetes" class="wiki-image">
+          <img src="https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Contexto clínico de la diabetes" class="wiki-image">
           <figcaption class="img-caption">El control y monitoreo constante es vital en el manejo de la Diabetes Mellitus.</figcaption>
         </figure>
         <p>
@@ -59,7 +59,7 @@
         </p>
         
         <figure class="img-container">
-          <img src="https://images.unsplash.com/photo-1584308666744-24d59ce05500?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Pruebas de laboratorio y glucómetro" class="wiki-image">
+          <img src="https://images.pexels.com/photos/6753147/pexels-photo-6753147.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Pruebas de laboratorio y glucómetro" class="wiki-image">
           <figcaption class="img-caption">Extracción de muestras y pruebas de glucemia para confirmar el diagnóstico clínico.</figcaption>
         </figure>
 
@@ -110,7 +110,7 @@
           <li><b>Insulinoterapia:</b> Indicada desde el inicio si hay pérdida de peso drástica, síntomas graves o HbA1c > 10%. Se utilizan regímenes basal-bolo combinando insulinas de acción prolongada y de acción ultra rápida.</li>
         </ul>
         <figure class="img-container">
-          <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Farmacología y medicamentos" class="wiki-image">
+          <img src="https://images.pexels.com/photos/3683053/pexels-photo-3683053.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Farmacología y medicamentos" class="wiki-image">
           <figcaption class="img-caption">El manejo farmacológico actual prioriza la protección cardiovascular y renal del paciente.</figcaption>
         </figure>
       </section>
@@ -143,7 +143,7 @@
           El personal de enfermería es el pilar central en la educación y monitoreo del paciente diabético. Las intervenciones (NIC) y diagnósticos (NANDA) se centran en el empoderamiento del paciente para el autocuidado:
         </p>
         <figure class="img-container">
-          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Atención de enfermería al paciente" class="wiki-image">
+          <img src="https://images.pexels.com/photos/5214995/pexels-photo-5214995.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Atención de enfermería al paciente" class="wiki-image">
           <figcaption class="img-caption">El profesional de enfermería es indispensable en la educación diabetológica y el seguimiento clínico.</figcaption>
         </figure>
         <ul>
@@ -335,7 +335,7 @@ html {
 .wiki-image {
   max-width: 100%;
   height: auto;
-  max-height: 380px; /* Limita la altura para que no ocupe toda la pantalla */
+  max-height: 380px;
   object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
