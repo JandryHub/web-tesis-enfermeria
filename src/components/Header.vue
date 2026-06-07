@@ -2,7 +2,7 @@
   <header class="app-header">
     <div class="header-container">
       <div class="brand">
-        <h1><span class="highlight">+</span> Tesis Enfermería</h1>
+        <h1><span class="highlight">+</span>Vive en Balance</h1>
       </div>
       <nav class="navbar">
         <ul>
