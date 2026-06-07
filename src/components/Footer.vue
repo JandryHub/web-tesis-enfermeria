@@ -6,7 +6,7 @@
         <p>Herramienta educativa para la comprensión y aprendizaje de procedimientos y terminología.</p>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Proyecto de Tesis. Todos los derechos reservados.</p>
+        <p>&copy; 2026 Vive en Balance. Todos los derechos reservados.</p>
       </div>
     </div>
   </footer>
